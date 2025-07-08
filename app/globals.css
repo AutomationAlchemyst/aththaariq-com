@@ -1,0 +1,18 @@
+/* These are the three essential Tailwind instructions. */
+/* They tell the browser to load Tailwind's base styles, component classes, and utility classes. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles from our design system */
+body {
+  background-color: #111827; /* Deep Dark Grey */
+  color: #e5e7eb; /* Clean Off-White */
+}
+
+.glass-card {
+  background: rgba(31, 41, 55, 0.6); /* Lighter Dark Grey with transparency */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
