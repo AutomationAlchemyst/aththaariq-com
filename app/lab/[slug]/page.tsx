@@ -1,7 +1,7 @@
 import { client } from '@/sanity/client';
 import { notFound } from 'next/navigation';
-// === FIX: Corrected the relative path ===
-import HustleTaxCalculator from '../../components/HustleTaxCalculator.tsx';
+// === FINAL FIX: Removed the .tsx extension from the import path ===
+import HustleTaxCalculator from '../../components/HustleTaxCalculator';
 
 // Define the interface for a single Lab Project.
 interface LabProject {
