@@ -1,21 +1,29 @@
 import { NextResponse } from 'next/server';
 import * as admin from 'firebase-admin';
 
-// Import your service account key
-// The `fs` module is used to read the file from your server
-import fs from 'fs';
-import path from 'path';
+// --- REMOVED ---
+// We no longer need to read files from the filesystem.
+// import fs from 'fs';
+// import path from 'path';
 
-// Path to your service account key file
-const serviceAccountPath = path.resolve('./firebase-service-account.json');
-const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
+// --- NEW: SECURELY PARSE THE ENVIRONMENT VARIABLE ---
+// This safely gets the service account JSON from the Vercel environment variables.
+// It checks if the variable exists before trying to parse it.
+const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT_JSON
+  ? JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON)
+  : null;
 
 // Initialize the Firebase Admin SDK
-// This check prevents re-initializing the app on every request
+// This check prevents re-initializing the app on every request.
+// It also ensures we only initialize if the service account credentials are valid.
 if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
-  });
+  if (serviceAccount) {
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount)
+    });
+  } else {
+    console.error("Firebase Admin initialization failed: FIREBASE_SERVICE_ACCOUNT_JSON is not set.");
+  }
 }
 
 const db = admin.firestore();
