@@ -1,11 +1,13 @@
 import { createClient } from '@sanity/client'
 
-// This configuration object holds the connection details for your Sanity project.
+// This configuration object now reads its values from environment variables.
+// This is a security best practice and is essential for deployment.
 const clientConfig = {
-  // You can find your project ID and dataset in your `sanity.config.ts` file
-  projectId: '2w7mkfb7',
-  dataset: 'production',
-  apiVersion: '2024-07-04', // Use a recent date
+  // These variables are pulled from your .env.local file in development,
+  // and from the Vercel dashboard environment variables in production.
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
   useCdn: false, // `false` if you want to ensure fresh data
 }
 
